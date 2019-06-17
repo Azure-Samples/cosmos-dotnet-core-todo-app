@@ -1,8 +1,12 @@
-﻿using CosmosWebSample.Services;
+﻿using System.Threading.Tasks;
+using CosmosWebSample.Models;
+using CosmosWebSample.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Cosmos;
+using Microsoft.Azure.Cosmos.Fluent;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,9 +33,7 @@ namespace v3webcore
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            var documentDbService = new CosmosDbService(Configuration.GetSection("CosmosDb"));
-            documentDbService.InitializeAsync().Wait();
-            services.AddSingleton<ICosmosDbService>(documentDbService);
+            services.AddSingleton<ICosmosDbService>(InitializeCosmosClientInstanceAsync(Configuration.GetSection("CosmosDb")).GetAwaiter().GetResult());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +59,20 @@ namespace v3webcore
                     name: "default",
                     template: "{controller=Item}/{action=Index}/{id?}");
             });
+        }
+
+        private static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync(IConfigurationSection configurationSection)
+        {
+            CosmosDbSettings config = new CosmosDbSettings(configurationSection);
+            CosmosClientBuilder clientBuilder = new CosmosClientBuilder(config.DatabaseUri, config.DatabaseKey);
+            CosmosClient client = clientBuilder
+                                .WithConnectionModeDirect()
+                                .Build();
+            CosmosDbService cosmosDbService = new CosmosDbService(client, config.DatabaseName, config.ContainerName);
+            Database database = await client.CreateDatabaseIfNotExistsAsync(config.DatabaseName);
+            await database.CreateContainerIfNotExistsAsync(config.ContainerName, "/id");
+
+            return cosmosDbService;
         }
     }
 }
