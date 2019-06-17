@@ -33,7 +33,7 @@
         {
             if (ModelState.IsValid)
             {
-                //item.Id = Guid.NewGuid().ToString();
+                item.Id = Guid.NewGuid().ToString();
                 await _cosmosDbService.AddItemAsync(item);
                 return RedirectToAction("Index");
             }
