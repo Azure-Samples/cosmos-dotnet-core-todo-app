@@ -1,4 +1,4 @@
-﻿namespace CosmosWebSample.Models
+﻿namespace todo.Models
 {
     using Newtonsoft.Json;
 

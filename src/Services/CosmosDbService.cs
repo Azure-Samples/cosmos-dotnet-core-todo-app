@@ -1,9 +1,9 @@
-﻿namespace CosmosWebSample.Services
+﻿namespace todo.Services
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using CosmosWebSample.Models;
+    using todo.Models;
     using Microsoft.Azure.Cosmos;
     using Microsoft.Azure.Cosmos.Fluent;
     using Microsoft.Extensions.Configuration;
