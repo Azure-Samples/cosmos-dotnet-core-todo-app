@@ -1,17 +1,17 @@
-﻿using System.Threading.Tasks;
-using CosmosWebSample.Models;
-using CosmosWebSample.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos;
-using Microsoft.Azure.Cosmos.Fluent;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace v3webcore
+﻿namespace todo
 {
+    using System.Threading.Tasks;
+    using todo.Models;
+    using todo.Services;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Azure.Cosmos;
+    using Microsoft.Azure.Cosmos.Fluent;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -63,14 +63,17 @@ namespace v3webcore
 
         private static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync(IConfigurationSection configurationSection)
         {
-            CosmosDbSettings config = new CosmosDbSettings(configurationSection);
-            CosmosClientBuilder clientBuilder = new CosmosClientBuilder(config.DatabaseUri, config.DatabaseKey);
+            string databaseName = configurationSection.GetSection("DatabaseName").Value;
+            string containerName = configurationSection.GetSection("ContainerName").Value;
+            string account = configurationSection.GetSection("Account").Value;
+            string key = configurationSection.GetSection("Key").Value;
+            CosmosClientBuilder clientBuilder = new CosmosClientBuilder(account, key);
             CosmosClient client = clientBuilder
                                 .WithConnectionModeDirect()
                                 .Build();
-            CosmosDbService cosmosDbService = new CosmosDbService(client, config.DatabaseName, config.ContainerName);
-            Database database = await client.CreateDatabaseIfNotExistsAsync(config.DatabaseName);
-            await database.CreateContainerIfNotExistsAsync(config.ContainerName, "/id");
+            CosmosDbService cosmosDbService = new CosmosDbService(client, databaseName, containerName);
+            Database database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
+            await database.CreateContainerIfNotExistsAsync(containerName, "/id");
 
             return cosmosDbService;
         }

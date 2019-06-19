@@ -1,8 +1,8 @@
-﻿namespace CosmosWebSample.Services
+﻿namespace todo.Services
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using CosmosWebSample.Models;
+    using todo.Models;
 
     public interface ICosmosDbService
     {

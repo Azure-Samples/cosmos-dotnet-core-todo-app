@@ -1,6 +1,6 @@
 using System;
 
-namespace CosmosWebSample.Models
+namespace todo.Models
 {
     public class ErrorViewModel
     {

@@ -1,8 +1,8 @@
-﻿namespace CosmosWebSample.Controllers
+﻿namespace todo.Controllers
 {
     using System;
     using System.Threading.Tasks;
-    using CosmosWebSample.Services;
+    using todo.Services;
     using Microsoft.AspNetCore.Mvc;
     using Models;
 
