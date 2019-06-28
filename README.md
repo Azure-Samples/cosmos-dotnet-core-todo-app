@@ -1,7 +1,10 @@
 ---
-services: cosmos-db
-platforms: dotnet
-author: maquaran
+topic: sample
+languages:
+  - csharp
+products:
+  - aspnet-core
+  - azure-cosmos-db
 ---
 
 # Web application development with ASP.NET Core MVC using Azure Cosmos DB
