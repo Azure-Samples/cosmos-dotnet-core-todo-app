@@ -72,8 +72,8 @@
                                 .WithConnectionModeDirect()
                                 .Build();
             CosmosDbService cosmosDbService = new CosmosDbService(client, databaseName, containerName);
-            Database database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
-            await database.CreateContainerIfNotExistsAsync(containerName, "/id");
+            DatabaseResponse database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
+            await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
 
             return cosmosDbService;
         }
