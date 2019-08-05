@@ -61,6 +61,7 @@
             });
         }
 
+        // <InitializeCosmosClientInstanceAsync>
         private static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync(IConfigurationSection configurationSection)
         {
             string databaseName = configurationSection.GetSection("DatabaseName").Value;
@@ -77,5 +78,6 @@
 
             return cosmosDbService;
         }
+        // </InitializeCosmosClientInstanceAsync>
     }
 }
