@@ -9,6 +9,7 @@ description: "This sample shows you how to use the Microsoft Azure Cosmos DB ser
 ---
 
 # Web application development with ASP.NET Core MVC using Azure Cosmos DB
+
 This sample shows you how to use the Microsoft Azure Cosmos DB service to store and access data from an ASP.NET Core MVC application hosted on Azure App Service or running locally in your computer.
 
 ## Running this sample in Visual Studio
