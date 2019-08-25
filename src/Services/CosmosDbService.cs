@@ -32,13 +32,16 @@
 
         public async Task<Item> GetItemAsync(string id)
         {
-            ItemResponse<Item> response = await this._container.ReadItemAsync<Item>(id, new PartitionKey(id));
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            try
             {
+                ItemResponse<Item> response = await this._container.ReadItemAsync<Item>(id, new PartitionKey(id));
+                return response.Resource;
+            }
+            catch(CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+            { 
                 return null;
             }
 
-            return response.Resource;
         }
 
         public async Task<IEnumerable<Item>> GetItemsAsync(string queryString)
