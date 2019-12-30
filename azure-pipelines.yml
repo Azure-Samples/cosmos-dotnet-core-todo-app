@@ -45,7 +45,7 @@ steps:
   displayName: 'NuGet push'
   inputs:
     command: push
-    nuGetFeedType: external
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     versioningScheme: byPrereleaseNumber
 - task: VSTest@2
   inputs:
