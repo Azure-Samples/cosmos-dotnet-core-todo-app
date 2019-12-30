@@ -45,8 +45,8 @@ steps:
   displayName: 'NuGet push'
   inputs:
     command: push
-    publishVstsFeed: 'test-feed'
-    allowPackageConflicts: true
+    nuGetFeedType: external
+    versioningScheme: byPrereleaseNumber
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
