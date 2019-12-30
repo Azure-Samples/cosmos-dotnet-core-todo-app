@@ -39,6 +39,8 @@ steps:
 
 - task: NuGetAuthenticate@0
   displayName: 'NuGet Authenticate'
+  inputs:
+      nuGetServiceConnections: 'nuget-connection'
 - task: NuGetCommand@2
   displayName: 'NuGet push'
   inputs:
