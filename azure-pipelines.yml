@@ -33,7 +33,7 @@ steps:
   displayName: 'NuGet push'
   inputs:
     command: push
-    publishVstsFeed: '<feedName>'
+    publishVstsFeed: 'test-feed'
     allowPackageConflicts: true
 
 - task: VSBuild@1
