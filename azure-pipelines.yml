@@ -45,10 +45,12 @@ steps:
   displayName: 'NuGet push'
   inputs:
     command: push
+    feedsToUse: 'select'
     nuGetFeedType: internal
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     versioningScheme: byPrereleaseNumber
-    publishVstsFeed: 'test-feed'
+    vstsFeed: test-feed
+    publishVstsFeed: test-feed
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
