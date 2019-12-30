@@ -19,6 +19,10 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
@@ -27,7 +31,6 @@ steps:
     configuration: '$(buildConfiguration)'
 - task: NuGetCommand@2
   inputs:
-    restoreSolution: '$(solution)'
     command: pack
     versioningScheme: byPrereleaseNumber
     majorVersion: '$(Major)'
