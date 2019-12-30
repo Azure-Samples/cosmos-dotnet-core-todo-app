@@ -45,10 +45,10 @@ steps:
   displayName: 'NuGet push'
   inputs:
     command: push
-    nuGetFeedType: external
+    nuGetFeedType: internal
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-    publishFeedCredentials: 'aishwarya-token'
     versioningScheme: byPrereleaseNumber
+    publishVstsFeed: 'test-feed'
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
