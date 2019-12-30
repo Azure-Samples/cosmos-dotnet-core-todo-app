@@ -49,8 +49,8 @@ steps:
     nuGetFeedType: internal
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     versioningScheme: byPrereleaseNumber
-    vstsFeed: new-feed
-    publishVstsFeed: new-feed
+    vstsFeed: aishwaryasohani
+    publishVstsFeed: aishwaryasohani
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
