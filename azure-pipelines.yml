@@ -31,7 +31,7 @@ steps:
     configuration: '$(buildConfiguration)'
 - task: NuGetCommand@2
   inputs:
-    command: restore
+    command: push
     versioningScheme: byPrereleaseNumber
     majorVersion: '$(Major)'
     minorVersion: '$(Minor)'
