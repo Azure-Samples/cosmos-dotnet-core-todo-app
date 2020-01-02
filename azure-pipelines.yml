@@ -15,7 +15,7 @@ variables:
   buildConfiguration: 'Release'
   Major: '1'
   Minor: '0'
-  Patch: '0'
+  Patch: '1'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -31,7 +31,7 @@ steps:
     configuration: '$(buildConfiguration)'
 - task: NuGetCommand@2
   inputs:
-    command: pack
+    command: restore
     versioningScheme: byPrereleaseNumber
     majorVersion: '$(Major)'
     minorVersion: '$(Minor)'
@@ -49,8 +49,8 @@ steps:
     nuGetFeedType: internal
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     versioningScheme: byPrereleaseNumber
-    vstsFeed: aishwaryasohani\new-feed
-    publishVstsFeed: aishwaryasohani\new-feed
+    vstsFeed: aishwaryasohani
+    publishVstsFeed: aishwaryasohani
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
