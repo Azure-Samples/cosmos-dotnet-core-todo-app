@@ -1,19 +1,19 @@
 ﻿namespace todo.Models
 {
-    using Newtonsoft.Json;
+    using System.Text.Json.Serialization;
 
     public class Item
     {
-        [JsonProperty(PropertyName = "id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; }
 
-        [JsonProperty(PropertyName = "name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        [JsonProperty(PropertyName = "description")]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        [JsonProperty(PropertyName = "isComplete")]
+        [JsonPropertyName("isComplete")]
         public bool Completed { get; set; }
     }
 }

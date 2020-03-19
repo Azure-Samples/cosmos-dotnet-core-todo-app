@@ -48,7 +48,7 @@
         {
             if (ModelState.IsValid)
             {
-                await _cosmosDbService.UpdateItemAsync(item.Id, item);
+                await _cosmosDbService.UpdateItemAsync(item);
                 return RedirectToAction("Index");
             }
 

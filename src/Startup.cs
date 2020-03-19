@@ -1,16 +1,15 @@
 ﻿namespace todo
 {
-    using System.Threading.Tasks;
-    using todo.Models;
-    using todo.Services;
+    using Azure.Cosmos;
+    using Azure.Cosmos.Fluent;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Azure.Cosmos;
-    using Microsoft.Azure.Cosmos.Fluent;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using System.Threading.Tasks;
+    using todo.Services;
 
     public class Startup
     {
@@ -21,7 +20,7 @@
 
         public IConfiguration Configuration { get; }
 
-        // <ConfigureServices> 
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -31,11 +30,9 @@
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<ICosmosDbService>(InitializeCosmosClientInstanceAsync(Configuration.GetSection("CosmosDb")).GetAwaiter().GetResult());
         }
-        // </ConfigureServices> 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -62,9 +59,9 @@
             });
         }
 
-        // <InitializeCosmosClientInstanceAsync>        
+        // <InitializeCosmosClientInstanceAsync>
         /// <summary>
-        /// Creates a Cosmos DB database and a container with the specified partition key. 
+        /// Creates a Cosmos DB database and a container with the specified partition key.
         /// </summary>
         /// <returns></returns>
         private static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync(IConfigurationSection configurationSection)
@@ -73,6 +70,7 @@
             string containerName = configurationSection.GetSection("ContainerName").Value;
             string account = configurationSection.GetSection("Account").Value;
             string key = configurationSection.GetSection("Key").Value;
+
             CosmosClientBuilder clientBuilder = new CosmosClientBuilder(account, key);
             CosmosClient client = clientBuilder
                                 .WithConnectionModeDirect()
@@ -83,6 +81,7 @@
 
             return cosmosDbService;
         }
+
         // </InitializeCosmosClientInstanceAsync>
     }
 }

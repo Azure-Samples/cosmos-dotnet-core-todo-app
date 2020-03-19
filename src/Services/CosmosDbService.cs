@@ -1,66 +1,59 @@
 ﻿namespace todo.Services
 {
+    using Azure.Cosmos;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using todo.Models;
-    using Microsoft.Azure.Cosmos;
-    using Microsoft.Azure.Cosmos.Fluent;
-    using Microsoft.Extensions.Configuration;
 
     public class CosmosDbService : ICosmosDbService
     {
-        private Container _container;
+        private readonly CosmosContainer _cosmosContainer;
 
-        public CosmosDbService(
-            CosmosClient dbClient,
-            string databaseName,
-            string containerName)
+        public CosmosDbService(CosmosClient dbClient, string databaseName, string containerName)
         {
-            this._container = dbClient.GetContainer(databaseName, containerName);
+            this._cosmosContainer = dbClient.GetContainer(databaseName, containerName);
         }
-        
+
         public async Task AddItemAsync(Item item)
         {
-            await this._container.CreateItemAsync<Item>(item, new PartitionKey(item.Id));
+            await this._cosmosContainer.CreateItemAsync<Item>(item, new PartitionKey(item.Id));
         }
 
         public async Task DeleteItemAsync(string id)
         {
-            await this._container.DeleteItemAsync<Item>(id, new PartitionKey(id));
+            await this._cosmosContainer.DeleteItemAsync<Item>(id, new PartitionKey(id));
         }
 
         public async Task<Item> GetItemAsync(string id)
         {
             try
             {
-                ItemResponse<Item> response = await this._container.ReadItemAsync<Item>(id, new PartitionKey(id));
-                return response.Resource;
+                ItemResponse<Item> response = await this._cosmosContainer.ReadItemAsync<Item>(id, new PartitionKey(id));
+                return response;
             }
-            catch(CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
-            { 
+            catch (CosmosException ex) when (ex.Status == (int)System.Net.HttpStatusCode.NotFound)
+            {
                 return null;
             }
-
         }
 
         public async Task<IEnumerable<Item>> GetItemsAsync(string queryString)
         {
-            var query = this._container.GetItemQueryIterator<Item>(new QueryDefinition(queryString));
+            QueryDefinition queryDefinition = new QueryDefinition(queryString);
+
             List<Item> results = new List<Item>();
-            while (query.HasMoreResults)
+
+            await foreach (Item item in _cosmosContainer.GetItemQueryIterator<Item>(queryDefinition))
             {
-                var response = await query.ReadNextAsync();
-                
-                results.AddRange(response.ToList());
+                results.Add(item);
             }
 
             return results;
         }
 
-        public async Task UpdateItemAsync(string id, Item item)
+        public async Task UpdateItemAsync(Item item)
         {
-            await this._container.UpsertItemAsync<Item>(item, new PartitionKey(id));
+            await this._cosmosContainer.UpsertItemAsync<Item>(item, new PartitionKey(item.Id));
         }
     }
 }
