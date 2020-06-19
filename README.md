@@ -44,10 +44,10 @@ This sample shows you how to use the Microsoft Azure Cosmos DB service to store 
 5. After a short time, Visual Studio will complete the deployment.
 
 6. After deployment, go you your Web App in the Azure Portal and make sure to [add the App Settings](https://docs.microsoft.com/azure/app-service/configure-common#configure-app-settings):
-    1. `CosmosDb.Account`: The endpoint for the Azure Cosmos account.
-    1. `CosmosDb.Key`: The key for the Azure Cosmos account.
-    1. `CosmosDb.DatabaseName`: The name of the Azure Cosmos database to use.
-    1. `CosmosDb.ContainerName`: The name of the Azure Cosmos container to use.
+    1. `CosmosDb:Account`: The endpoint for the Azure Cosmos account.
+    1. `CosmosDb:Key`: The key for the Azure Cosmos account.
+    1. `CosmosDb:DatabaseName`: The name of the Azure Cosmos database to use.
+    1. `CosmosDb:ContainerName`: The name of the Azure Cosmos container to use.
 
 For additional ways to deploy this web application to Azure, please refer to the [Deploy ASP.NET Core apps to Azure App Service](https://docs.microsoft.com/aspnet/core/host-and-deploy/azure-apps/?view=aspnetcore-2.2) article which includes information on using Azure Pipelines, CLI, and many more. 
 
@@ -86,10 +86,10 @@ For additional ways to deploy this web application to Azure, please refer to the
 6. After a short time, Visual Studio Code will complete the deployment.
 
 7. After deployment, go you your Web App in the Azure Portal and make sure to [add the App Settings](https://docs.microsoft.com/azure/app-service/configure-common#configure-app-settings):
-    1. `CosmosDb.Account`: The endpoint for the Azure Cosmos account.
-    1. `CosmosDb.Key`: The key for the Azure Cosmos account.
-    1. `CosmosDb.DatabaseName`: The name of the Azure Cosmos database to use.
-    1. `CosmosDb.ContainerName`: The name of the Azure Cosmos container to use.
+    1. `CosmosDb:Account`: The endpoint for the Azure Cosmos account.
+    1. `CosmosDb:Key`: The key for the Azure Cosmos account.
+    1. `CosmosDb:DatabaseName`: The name of the Azure Cosmos database to use.
+    1. `CosmosDb:ContainerName`: The name of the Azure Cosmos container to use.
 
 For additional ways to deploy this web application to Azure, please refer to [Deploy to Azure using App Service](https://code.visualstudio.com/tutorials/app-service-extension/getting-started) or [Deploy to Azure using the Azure CLI](https://code.visualstudio.com/tutorials/nodejs-deployment/getting-started).
 
