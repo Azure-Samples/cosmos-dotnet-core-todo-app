@@ -20,14 +20,14 @@ This sample shows you how to use the Microsoft Azure Cosmos DB service to store 
 
 2. Clone this repository using Git for Windows (http://www.git-scm.com/), or download the zip file.
 
-3. From Visual Studio, open the [CosmosWebSample.csproj](./src/CosmosWebSample.csproj).
+3. From Visual Studio, open the [todo.csproj](./src/todo.csproj).
 
 4. In Visual Studio Build menu, select **Build Solution** (or Press F6). 
 
 5. Retrieve the URI and PRIMARY KEY (or SECONDARY KEY) values from the Keys blade of your Azure Cosmos account in the Azure portal. For more information on obtaining endpoint & keys for your Azure Cosmos account refer to [View, copy, and regenerate access keys and passwords](https://docs.microsoft.com/azure/cosmos-db/secure-access-to-data#master-keys)  **if you are going to work with a real Azure Cosmos account**.
     * The default configuration is setup to work with a local Azure Cosmos DB Emulator.
 
-6. In the [appSettings.json](./src/appSettings.json) file, located in the project root, find **Account** and **Key** and replace the placeholder values with the values obtained for your account if you are going to work with a real Azure Cosmos account.
+6. In the [appsettings.json](./src/appsettings.json) file, located in the project root, find **Account** and **Key** and replace the placeholder values with the values obtained for your account if you are going to work with a real Azure Cosmos account.
 
 7. You can now run and debug the application locally by pressing **F5** in Visual Studio.
 
@@ -49,19 +49,19 @@ For additional ways to deploy this web application to Azure, please refer to the
 ## Running this sample from the .NET Core command line
 
 1. Before you can run this sample, you must have the following prerequisites:
-    - [.NET Core SDK 2.1 or higher](https://dotnet.microsoft.com/download)
+    - [.NET Core SDK 3.1 or higher](https://dotnet.microsoft.com/download)
     - An active Azure Cosmos account or the [Azure Cosmos DB Emulator](https://docs.microsoft.com/azure/cosmos-db/local-emulator) - If you don't have an account, refer to the [Create a database account](https://docs.microsoft.com/azure/cosmos-db/create-sql-api-dotnet#create-an-azure-cosmos-db-account) article
 
 2. Clone this repository using your Git command line, or download the zip file.
 
-3. Go to the location of the [CosmosWebSample.csproj](./src/CosmosWebSample.csproj) in your command line prompt.
+3. Go to the location of the [todo.csproj](./src/todo.csproj) in your command line prompt.
 
 4. Run `dotnet build` to restore packages and build the project.
 
 5. Retrieve the URI and PRIMARY KEY (or SECONDARY KEY) values from the Keys blade of your Azure Cosmos account in the Azure portal. For more information on obtaining endpoint & keys for your Azure Cosmos account refer to [View, copy, and regenerate access keys and passwords](https://docs.microsoft.com/azure/cosmos-db/secure-access-to-data#master-keys) **if you are going to work with a real Azure Cosmos account**.
     * The default configuration is setup to work with a local Azure Cosmos DB Emulator.
 
-6. In the [appSettings.json](./src/appSettings.json) file, located in the project root, find **Account** and **Key** and replace the placeholder values with the values obtained for your account if you are going to work with a real Azure Cosmos account.
+6. In the [appsettings.json](./src/appsettings.json) file, located in the project root, find **Account** and **Key** and replace the placeholder values with the values obtained for your account if you are going to work with a real Azure Cosmos account.
 
 7. You can now run and debug the application locally by running `dotnet run` and browsing the Url provided by the .NET Core command line.
 
