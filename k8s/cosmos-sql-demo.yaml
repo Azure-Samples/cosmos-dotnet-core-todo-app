@@ -1,0 +1,51 @@
+apiVersion: microsoft.resources.azure.com/v1alpha1api20200601
+kind: ResourceGroup
+metadata:
+  name: xtian-aso-cosmos
+  namespace: cosmosdb
+spec:
+  location: westcentralus
+---
+apiVersion: microsoft.documentdb.azure.com/v1alpha1api20210515
+kind: DatabaseAccount
+metadata:
+  name: sample-db-account
+  namespace: cosmosdb
+spec:
+  location: westcentralus
+  owner:
+    name: xtian-aso-cosmos
+  kind: GlobalDocumentDB
+  databaseAccountOfferType: Standard
+  locations:
+    - locationName: westcentralus
+---
+apiVersion: microsoft.documentdb.azure.com/v1alpha1api20210515
+kind: SqlDatabase
+metadata:
+  name: sample-sql-db
+  namespace: cosmosdb
+spec:
+  location: westcentralus
+  owner:
+    name: sample-db-account
+  options:
+    autoscaleSettings:
+      maxThroughput: 4000
+  resource:
+    id: sample-sql-db
+---
+apiVersion: microsoft.documentdb.azure.com/v1alpha1api20210515
+kind: SqlDatabaseContainer
+metadata:
+  name: sample-sql-container
+  namespace: cosmosdb
+spec:
+  location: westcentralus
+  owner:
+    name: sample-sql-db
+  resource:
+    id: sample-sql-container
+    partitionKey:
+      kind: Hash
+      paths: ["/id"]
