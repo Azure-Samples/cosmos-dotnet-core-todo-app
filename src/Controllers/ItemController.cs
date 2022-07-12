@@ -28,7 +28,7 @@
         [HttpPost]
         [ActionName("Create")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateAsync([Bind("Id,Name,Description,Completed")] Item item)
+        public async Task<ActionResult> CreateAsync([Bind("Id,messageId,deviceId,temperature, humidity")] Item item)
         {
             if (ModelState.IsValid)
             {
