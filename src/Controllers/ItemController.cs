@@ -43,7 +43,7 @@
         [HttpPost]
         [ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync([Bind("Id,Name,Description,Completed")] Item item)
+        public async Task<ActionResult> EditAsync([Bind("Id,messageId,deviceId,temperature, humidity")] Item item)
         {
             if (ModelState.IsValid)
             {
