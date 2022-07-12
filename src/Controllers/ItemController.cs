@@ -28,7 +28,7 @@
         [HttpPost]
         [ActionName("Create")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateAsync([Bind("Id,messageId,deviceId,temperature, humidity")] Item item)
+        public async Task<ActionResult> CreateAsync([Bind("Id,Name,Description,Completed")] Item item)
         {
             if (ModelState.IsValid)
             {
@@ -43,7 +43,7 @@
         [HttpPost]
         [ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync([Bind("Id,messageId,deviceId,temperature, humidity")] Item item)
+        public async Task<ActionResult> EditAsync([Bind("Id,Name,Description,Completed")] Item item)
         {
             if (ModelState.IsValid)
             {
