@@ -1,6 +1,7 @@
 ﻿namespace todo
 {
     using System.Threading.Tasks;
+    using Azure.Identity;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -52,7 +53,7 @@
             });
         }
 
-        // <InitializeCosmosClientInstanceAsync>        
+        // <InitializeCosmosClientInstanceAsync>
         /// <summary>
         /// Creates a Cosmos DB database and a container with the specified partition key. 
         /// </summary>
@@ -62,8 +63,21 @@
             string databaseName = configurationSection.GetSection("DatabaseName").Value;
             string containerName = configurationSection.GetSection("ContainerName").Value;
             string account = configurationSection.GetSection("Account").Value;
+
+            // If key is not set, assume we're using managed identity
             string key = configurationSection.GetSection("Key").Value;
-            Microsoft.Azure.Cosmos.CosmosClient client = new Microsoft.Azure.Cosmos.CosmosClient(account, key);
+            ManagedIdentityCredential miCredential;
+            Microsoft.Azure.Cosmos.CosmosClient client;
+            if (string.IsNullOrEmpty(key))
+            {
+                miCredential = new ManagedIdentityCredential();
+                client = new Microsoft.Azure.Cosmos.CosmosClient(account, miCredential);
+            }
+            else
+            {
+                client = new Microsoft.Azure.Cosmos.CosmosClient(account, key);
+            }
+            
             CosmosDbService cosmosDbService = new CosmosDbService(client, databaseName, containerName);
             Microsoft.Azure.Cosmos.DatabaseResponse database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
             await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
