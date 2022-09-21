@@ -2,9 +2,8 @@
 {
     using System;
     using System.Threading.Tasks;
-    using todo.Services;
     using Microsoft.AspNetCore.Mvc;
-    using Models;
+    using todo.Models;
 
     public class ItemController : Controller
     {
