@@ -4,7 +4,7 @@ metadata:
   labels:
     app: cosmos-todo-app
   name: cosmos-todo-app
-  namespace: cosmosdb
+  namespace: cosmos-todo
 spec:
   replicas: 1
   selector:
@@ -30,7 +30,7 @@ spec:
               secretKeyRef:
                 key: Key
                 name: cosmos-settings
-                optional: false
+                optional: true
           - name: CosmosDB__DatabaseName
             valueFrom:
               secretKeyRef:
@@ -60,7 +60,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cosmos-todo-service
-  namespace: cosmosdb
+  namespace: cosmos-todo
 spec:
   ports:
   - port: 80
