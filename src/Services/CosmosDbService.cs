@@ -1,12 +1,9 @@
 ﻿namespace todo
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using todo.Models;
     using Microsoft.Azure.Cosmos;
-    using Microsoft.Azure.Cosmos.Fluent;
-    using Microsoft.Extensions.Configuration;
 
     public class CosmosDbService : ICosmosDbService
     {
@@ -44,18 +41,19 @@
 
         }
 
-        public async Task<IEnumerable<Item>> GetItemsAsync(string queryString)
+        public async IAsyncEnumerable<Item> GetItemsAsync(string query)
         {
-            var query = this._container.GetItemQueryIterator<Item>(new QueryDefinition(queryString));
-            List<Item> results = new List<Item>();
-            while (query.HasMoreResults)
-            {
-                var response = await query.ReadNextAsync();
-                
-                results.AddRange(response.ToList());
-            }
+            FeedIterator<Item> resultSetIterator = _container.GetItemQueryIterator<Item>(new QueryDefinition(query));
 
-            return results;
+            while (resultSetIterator.HasMoreResults)
+            {
+                var feedResponse = await resultSetIterator.ReadNextAsync();
+
+                foreach (var item in feedResponse)
+                {
+                    yield return item;
+                }
+            }
         }
 
         public async Task UpdateItemAsync(string id, Item item)

@@ -14,9 +14,9 @@
         }
 
         [ActionName("Index")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _cosmosDbService.GetItemsAsync("SELECT * FROM c"));
+            return View(_cosmosDbService.GetItemsAsync("SELECT * FROM c"));
         }
 
         [ActionName("Create")]
