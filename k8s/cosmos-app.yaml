@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cosmos-todo-app
+  name: cosmos-todo-app
+  namespace: cosmos-todo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cosmos-todo-app
+  template:
+    metadata:
+      labels:
+        app: cosmos-todo-app
+    spec:
+      containers:
+      - name: app
+        image: localhost:5000/cosmos-todo-app:latest
+        env:
+          - name: CosmosDB__Account
+            valueFrom:
+              secretKeyRef:
+                key: Account
+                name: cosmos-settings
+                optional: false
+          - name: CosmosDB__Key
+            valueFrom:
+              secretKeyRef:
+                key: Key
+                name: cosmos-settings
+                optional: true
+          - name: CosmosDB__DatabaseName
+            valueFrom:
+              secretKeyRef:
+                key: DatabaseName
+                name: cosmos-settings
+                optional: true
+          - name: CosmosDB__ContainerName
+            valueFrom:
+              secretKeyRef:
+                key: ContainerName
+                name: cosmos-settings
+                optional: true
+        ports:
+        - containerPort: 80
+          name: webserver
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
+      terminationGracePeriodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cosmos-todo-service
+  namespace: cosmos-todo
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: cosmos-todo-app
